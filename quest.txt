@@ -1,0 +1,8 @@
+# Download NAVAll.txt
+curl -s https://www.amfiindia.com/spages/NAVAll.txt -o NAVAll.txt
+
+# Extract lines with scheme details and write as TSV: Scheme Name <TAB> Net Asset Value
+awk -F ';' 'BEGIN {OFS="\t"} 
+    $1 ~ /^[0-9]+$/ && $4 != "" && $5 != "" { print $4, $5 }' NAVAll.txt > schemes.tsv
+
+echo "Extracted data saved to schemes.tsv"
